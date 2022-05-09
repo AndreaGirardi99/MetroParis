@@ -37,8 +37,17 @@ public class Model {
 	
 	public List<Fermata> calcolaPercorso(Fermata partenza, Fermata arrivo) {
 		creaGrafo() ;
-		visitaGrafo(partenza);
-		return null ;
+		Map<Fermata, Fermata> alberoInverso = visitaGrafo(partenza);
+		
+		Fermata corrente = arrivo;
+		List<Fermata> percorso = new ArrayList<>();
+	
+		while(corrente != null) {
+			percorso.add(0, corrente);
+			corrente = alberoInverso.get(corrente);
+		}
+		
+		return percorso ;
 	}
 
 	public void creaGrafo() {
@@ -61,7 +70,7 @@ public class Model {
 
 	
 	
-	public void visitaGrafo(Fermata partenza) {
+	public Map<Fermata, Fermata> visitaGrafo(Fermata partenza) {
 		GraphIterator<Fermata, DefaultEdge> visita = new BreadthFirstIterator<>(this.grafo, partenza);
 		
 		Map<Fermata,Fermata> alberoInverso = new HashMap<>() ;
@@ -80,6 +89,7 @@ public class Model {
 //		while(fermata != null)
 //			fermata = alberoInverso.get(fermata)
 //			percorso.add(fermata)
+		return alberoInverso;
 	}
 
 }

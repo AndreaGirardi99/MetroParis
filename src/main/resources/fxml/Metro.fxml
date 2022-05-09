@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,8 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="it.polito.tdp.metroparis.MetroController">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.metroparis.MetroController">
    <top>
       <Label text="MetroParis - Ricerca percorsi" BorderPane.alignment="CENTER">
          <font>
@@ -42,6 +43,11 @@
                   <Button mnemonicParsing="false" onAction="#handleCerca" text="Ricerca percorso" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
+            <TableView fx:id="TablePercorso" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="colonnaFermata" editable="false" prefWidth="477.0" text="Fermata " />
+              </columns>
+            </TableView>
             <TextArea fx:id="txtResult" />
          </children>
          <BorderPane.margin>

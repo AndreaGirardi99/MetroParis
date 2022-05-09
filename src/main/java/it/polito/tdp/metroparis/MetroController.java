@@ -6,10 +6,14 @@ import java.util.ResourceBundle;
 
 import it.polito.tdp.metroparis.model.Fermata;
 import it.polito.tdp.metroparis.model.Model;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MetroController {
 	
@@ -18,6 +22,12 @@ public class MetroController {
     @FXML
     private ResourceBundle resources;
 
+    @FXML
+    private TableView<Fermata> TablePercorso;
+    
+    @FXML
+    private TableColumn<Fermata, String> colonnaFermata;
+    
     @FXML
     private URL location;
 
@@ -37,8 +47,11 @@ public class MetroController {
     	Fermata arrivo = boxArrivo.getValue();
     	
     	if(partenza!=null && arrivo!=null && !partenza.equals(arrivo)) {
-    		List<Fermata> percorso = model.calcolaPercorso(partenza, arrivo) ;
-    		txtResult.setText(percorso.toString());
+    		List<Fermata> percorso = model.calcolaPercorso(partenza, arrivo);
+    		
+    		TablePercorso.setItems(FXCollections.observableArrayList(percorso));
+    		
+    		txtResult.setText("Percorso trovato con " + percorso.size() + " stazioni \n");
     	} else {
     		txtResult.setText("Devi selezionare due stazioni, diverse tra loro\n");
     	}
@@ -50,7 +63,8 @@ public class MetroController {
         assert boxArrivo != null : "fx:id=\"boxArrivo\" was not injected: check your FXML file 'Metro.fxml'.";
         assert boxPartenza != null : "fx:id=\"boxPartenza\" was not injected: check your FXML file 'Metro.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Metro.fxml'.";
-
+        
+        colonnaFermata.setCellValueFactory(new PropertyValueFactory<Fermata, String>("nome"));
     }
 
 	public void setModel(Model m) {
